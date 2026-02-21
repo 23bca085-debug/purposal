@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Very Important Question</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #fdf2ff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .cursive {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Floating Stickers Base */
+        .sticker {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10;
+            filter: drop-shadow(3px 3px 2px rgba(0,0,0,0.1));
+        }
+
+        .float-slow { animation: float 8s ease-in-out infinite; }
+        .float-fast { animation: float 4s ease-in-out infinite; }
+        .wiggle { animation: wiggle 3s ease-in-out infinite; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(15deg); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* Story Slide Styling */
+        .slide {
+            display: none;
+            animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Polaroid Effect */
+        .polaroid {
+            background: white;
+            padding: 15px 15px 60px 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            border: 1px solid #eee;
+        }
+
+        /* Cigarette Smoke Hearts */
+        .smoke-heart {
+            position: absolute;
+            animation: rise 3s linear infinite;
+            opacity: 0;
+            color: #f472b6;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        #no-button {
+            transition: all 0.15s ease-out;
+            z-index: 50;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #fdf2ff 0%, #e0e7ff 100%);
+        }
+    </style>
+</head>
+<body class="text-purple-900 gradient-bg min-h-screen">
+
+    <!-- VISUAL STICKERS LAYER -->
+    <div id="visuals-layer">
+        <!-- Purple Elephants -->
+        <div class="sticker float-slow text-6xl" style="top: 10%; left: 5%;">🐘💜</div>
+        <div class="sticker float-fast text-4xl" style="top: 60%; right: 8%;">🐘💜</div>
+        <div class="sticker wiggle text-5xl" style="bottom: 10%; left: 15%;">🐘💜</div>
+
+        <!-- Cats & Dogs -->
+        <div class="sticker float-fast text-5xl" style="top: 25%; left: 12%;">🐶</div>
+        <div class="sticker float-slow text-5xl" style="top: 15%; right: 15%;">🐱</div>
+        <div class="sticker wiggle text-4xl" style="bottom: 25%; right: 10%;">🐕</div>
+        <div class="sticker float-fast text-4xl" style="bottom: 40%; left: 5%;">🐈</div>
+
+        <!-- Cigarettes with Heart Smoke -->
+        <div class="sticker" style="top: 45%; left: 8%;">
+            <div class="relative">
+                <div class="w-12 h-3 bg-white border-r-4 border-orange-400 rounded-sm shadow-sm"></div>
+                <div class="smoke-heart" style="animation-delay: 0s;">❤️</div>
+                <div class="smoke-heart" style="animation-delay: 1s;">💖</div>
+                <div class="smoke-heart" style="animation-delay: 2s;">💕</div>
+            </div>
+        </div>
+        <div class="sticker" style="top: 70%; right: 20%;">
+            <div class="relative rotate-180">
+                <div class="w-12 h-3 bg-white border-r-4 border-orange-400 rounded-sm shadow-sm"></div>
+                <div class="smoke-heart" style="animation-delay: 0.5s;">❤️</div>
+                <div class="smoke-heart" style="animation-delay: 1.5s;">💨</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-20 min-h-screen flex flex-col items-center justify-center p-6">
+        
+        <!-- INTRO -->
+        <section id="intro" class="text-center max-w-lg bg-white/40 backdrop-blur-md p-10 rounded-3xl border border-white/50 shadow-xl">
+            <div class="text-7xl mb-4">👑</div>
+            <h1 class="text-6xl font-bold cursive mb-6 text-purple-600">Once Upon a Time...</h1>
+            <p class="text-xl mb-8 leading-relaxed">In a kingdom not so far away, a beautiful story began. It’s the kind of tale they write songs about...</p>
+            <button onclick="startStory()" class="bg-purple-500 hover:bg-purple-600 text-white px-10 py-4 rounded-full font-bold text-xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                Read Our Fairytale 📖
+            </button>
+        </section>
+
+        <!-- LOVE STORY SLIDES (FAIRYTALE EDITION) -->
+        <section id="story" class="hidden w-full max-w-xl">
+            <div id="slides-container" class="mb-8">
+                <!-- Slide 1 -->
+                <div class="slide active">
+                    <div class="polaroid mb-6">
+                        <div class="w-full aspect-square bg-purple-100 flex items-center justify-center text-8xl rounded-sm">🏰</div>
+                    </div>
+                    <h2 class="text-3xl font-bold cursive mb-2">The Encounter</h2>
+                    <p class="text-center text-lg italic">"A chance meeting between two souls in the Great Forest of Life..."</p>
+                    <p class="text-center text-sm mt-2">I didn't know then that you were the hero I'd been waiting for.</p>
+                </div>
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <div class="polaroid mb-6" style="transform: rotate(3deg);">
+                        <div class="w-full aspect-square bg-pink-100 flex items-center justify-center text-8xl rounded-sm">✨</div>
+                    </div>
+                    <h2 class="text-3xl font-bold cursive mb-2">The Magic Spells</h2>
+                    <p class="text-center text-lg italic">"Every laugh was a spark, and every touch was a charm."</p>
+                    <p class="text-center text-sm mt-2">We built a world where elephants are purple and love never fades.</p>
+                </div>
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <div class="polaroid mb-6" style="transform: rotate(-1deg);">
+                        <div class="w-full aspect-square bg-indigo-100 flex items-center justify-center text-8xl rounded-sm">📜</div>
+                    </div>
+                    <h2 class="text-3xl font-bold cursive mb-2">The Eternal Chapter</h2>
+                    <p class="text-center text-lg italic">"And so, they reached the most important page of their book."</p>
+                    <p class="text-center text-sm mt-2">The part where the Prince and Princess decide on 'Forever'.</p>
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center px-4">
+                <button id="prevBtn" onclick="changeSlide(-1)" class="text-purple-400 font-bold disabled:opacity-30" disabled>← Back</button>
+                <div class="flex gap-2" id="dots">
+                    <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-purple-200"></div>
+                    <div class="w-2 h-2 rounded-full bg-purple-200"></div>
+                </div>
+                <button id="nextBtn" onclick="changeSlide(1)" class="bg-purple-500 text-white px-8 py-2 rounded-full font-bold shadow-md">Next Page →</button>
+            </div>
+        </section>
+
+        <!-- THE PROPOSAL -->
+        <section id="proposal" class="hidden text-center">
+            <div class="mb-8 animate-bounce text-8xl">💎</div>
+            <h2 class="text-6xl font-bold cursive mb-4 text-purple-800">My Dear Hero...</h2>
+            <h3 class="text-4xl font-bold mb-12 text-pink-500">Will you marry me and make this a 'Happily Ever After'?</h3>
+            
+            <div class="flex flex-col md:flex-row gap-8 items-center justify-center relative min-h-[200px] w-full max-w-md">
+                <button onclick="showAgreement()" class="bg-gradient-to-r from-green-400 to-green-500 text-white px-14 py-5 rounded-3xl text-3xl font-bold shadow-2xl hover:scale-110 active:scale-90 transition-all z-50">
+                    YES! ❤️
+                </button>
+                <button id="no-button" onmouseover="moveNo()" onclick="moveNo()" class="bg-white border-2 border-red-200 text-red-400 px-10 py-4 rounded-2xl text-xl font-bold shadow-md">
+                    No
+                </button>
+            </div>
+            
+            <div id="convince-box" class="mt-12 bg-white/80 p-6 rounded-2xl border-2 border-dashed border-purple-300 opacity-0 transition-opacity duration-500">
+                <p class="text-purple-700 text-xl font-bold italic">"Wait! A dragon ate the 'No' button! Try the 'Yes' one! 😉"</p>
+            </div>
+        </section>
+
+        <!-- FINAL AGREEMENT -->
+        <section id="agreement" class="hidden w-full max-w-2xl bg-[#fffcf0] border-[12px] border-double border-purple-200 p-8 md:p-12 rounded-sm shadow-2xl relative overflow-hidden">
+            <!-- Decorative Seal -->
+            <div class="absolute -top-5 -right-5 w-32 h-32 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold rotate-12 shadow-lg border-4 border-white z-10">
+                ROYAL DECREE
+            </div>
+
+            <h1 class="text-3xl text-center font-bold mb-8 uppercase tracking-widest border-b-2 border-purple-100 pb-4">The Fairytale Covenant</h1>
+            
+            <div class="space-y-6 text-gray-800 text-lg leading-relaxed">
+                <p><strong>I. SOVEREIGNTY:</strong> You shall be the King of my heart, and I shall be your Queen, ruling over our little Purple Kingdom with kindness.</p>
+                <p><strong>II. THE UNBREAKABLE VOW:</strong> No magic spell, dark forest, or wicked witch shall ever separate us. Divorce is a myth that does not exist in our scrolls.</p>
+                <p><strong>III. FEASTS & CUDDLES:</strong> Both parties agree to share all treasures (snacks) and defend the castle (our home) together forever.</p>
+                <p><strong>IV. THE ENDING:</strong> This agreement ensures that our story only has one ending: "And they lived happily ever after."</p>
+            </div>
+
+            <div class="mt-16 flex flex-col items-center">
+                <div class="w-full h-px bg-black mb-2"></div>
+                <p class="font-bold text-xl cursive">My Prince Charming</p>
+                <div class="text-sm text-gray-400 mt-1">Signed in Magic Ink 🖋️✨</div>
+                
+                <div class="flex gap-4 mt-8">
+                    <span class="text-4xl animate-bounce">🏰</span>
+                    <span class="text-4xl animate-bounce" style="animation-delay: 0.1s">🐘</span>
+                    <span class="text-4xl animate-bounce" style="animation-delay: 0.2s">💖</span>
+                    <span class="text-4xl animate-bounce" style="animation-delay: 0.3s">💍</span>
+                    <span class="text-4xl animate-bounce" style="animation-delay: 0.4s">🏰</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('#dots div');
+
+        function startStory() {
+            document.getElementById('intro').classList.add('hidden');
+            document.getElementById('story').classList.remove('hidden');
+        }
+
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.replace('bg-purple-500', 'bg-purple-200');
+            
+            currentSlide += direction;
+
+            if (currentSlide >= slides.length) {
+                document.getElementById('story').classList.add('hidden');
+                document.getElementById('proposal').classList.remove('hidden');
+                return;
+            }
+
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.replace('bg-purple-200', 'bg-purple-500');
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('no-button');
+            const convince = document.getElementById('convince-box');
+            
+            // Generate coordinates avoiding the edges
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            
+            convince.style.opacity = '1';
+        }
+
+        function showAgreement() {
+            document.getElementById('proposal').classList.add('hidden');
+            document.getElementById('agreement').classList.remove('hidden');
+            document.body.style.background = "#fff9fe";
+            
+            // Confetti effect
+            for(let i=0; i<30; i++) {
+                setTimeout(createEmojiRain, i * 100);
+            }
+        }
+
+        function createEmojiRain() {
+            const emojis = ['💖', '🏰', '✨', '💍', '👑', '🐘'];
+            const e = document.createElement('div');
+            e.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            e.className = 'fixed text-4xl pointer-events-none z-50';
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.top = '-50px';
+            e.style.transition = `top ${Math.random() * 2 + 2}s linear, transform 2s ease-in-out`;
+            document.body.appendChild(e);
+            
+            setTimeout(() => {
+                e.style.top = '110vh';
+                e.style.transform = `rotate(${Math.random() * 360}deg)`;
+            }, 10);
+            
+            setTimeout(() => e.remove(), 4000);
+        }
+    </script>
+</body>
+</html>
